@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_news_c11_sun/api/api_manager.dart';
 import 'package:flutter_app_news_c11_sun/app_colors.dart';
-import 'package:flutter_app_news_c11_sun/home/tabs/tabs_widget.dart';
-import 'package:flutter_app_news_c11_sun/model/SourceResponse.dart';
+import 'package:flutter_app_news_c11_sun/home/category/category_details.dart';
+import 'package:flutter_app_news_c11_sun/home/category/category_fragment.dart';
+import 'package:flutter_app_news_c11_sun/home/drawer/home_drawer.dart';
+import 'package:flutter_app_news_c11_sun/home/settings/settings_tab.dart';
+import 'package:flutter_app_news_c11_sun/model/Category.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'home_screen';
@@ -28,50 +30,41 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: Text(
-            'News App',
+            selectedMenuItem == HomeDrawer.settings
+                ? 'Settings'
+                : selectedCategory == null
+                    ? 'News App'
+                    : selectedCategory!.title,
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
-        body: FutureBuilder<SourceResponse?>(
-            future: ApiManager.getSources(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primaryLightColor,
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                return Column(
-                  children: [
-                    Text('Something went wrong'),
-                    ElevatedButton(
-                        onPressed: () {
-                          ApiManager.getSources();
-                          setState(() {});
-                        },
-                        child: Text('Try Again'))
-                  ],
-                );
-              }
-
-              /// server => success , error
-              if (snapshot.data!.status != 'ok') {
-                return Column(
-                  children: [
-                    Text(snapshot.data!.message!),
-                    ElevatedButton(
-                        onPressed: () {
-                          ApiManager.getSources();
-                        },
-                        child: Text('Try Again'))
-                  ],
-                );
-              }
-              var sourcesList = snapshot.data!.sources!;
-              return TabsWidget(sourcesList: sourcesList);
-            }),
+        drawer: Drawer(
+          child: HomeDrawer(onSideMenuItemClick: onSideMenuItemClick),
+        ),
+        body: selectedMenuItem == HomeDrawer.settings
+            ? SettingsTab()
+            : selectedCategory == null
+                ? CategoryFragment(onCategoryItemClick: onCategoryItemClick)
+                : CategoryDetails(category: selectedCategory!),
       )
     ]);
+  }
+
+  Category? selectedCategory;
+
+  void onCategoryItemClick(Category newCategory) {
+    //todo: newCategory => user select
+    selectedCategory = newCategory;
+    setState(() {});
+  }
+
+  int selectedMenuItem = HomeDrawer.categories;
+
+  void onSideMenuItemClick(int newSideMenuItem) {
+    //todo: newSideMenuItem => user select
+    selectedMenuItem = newSideMenuItem;
+    selectedCategory = null;
+    Navigator.pop(context);
+    setState(() {});
   }
 }
