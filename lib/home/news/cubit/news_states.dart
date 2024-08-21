@@ -16,4 +16,3 @@ class NewsSuccessState extends NewsStates {
   NewsSuccessState({required this.newsList});
 }
 
-class MessageState extends NewsStates {}
