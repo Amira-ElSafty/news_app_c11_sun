@@ -1,7 +1,9 @@
 import 'package:flutter_app_news_c11_sun/home/news/cubit/news_states.dart';
 import 'package:flutter_app_news_c11_sun/repository/news/news_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class NewsWidgetViewModel extends Cubit<NewsStates> {
   NewsRepository newsRepository;
 

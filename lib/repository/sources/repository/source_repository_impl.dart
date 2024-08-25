@@ -2,7 +2,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_app_news_c11_sun/model/SourceResponse.dart';
 import 'package:flutter_app_news_c11_sun/repository/sources/source_data_source.dart';
 import 'package:flutter_app_news_c11_sun/repository/sources/source_repository.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable(as: SourceRepository)
 class SourceRepositoryImpl implements SourceRepository {
   SourceRemoteDataSource remoteDataSource;
   SourceOfflineDataSource offlineDataSource;

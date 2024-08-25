@@ -1,7 +1,9 @@
 import 'package:flutter_app_news_c11_sun/model/SourceResponse.dart';
 import 'package:flutter_app_news_c11_sun/repository/sources/source_data_source.dart';
 import 'package:hive/hive.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable(as: SourceOfflineDataSource)
 class SourceOfflineDataSourceImpl implements SourceOfflineDataSource {
   @override
   Future<SourceResponse?> getSources(String categoryId) async {
