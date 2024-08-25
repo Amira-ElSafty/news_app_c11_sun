@@ -1,5 +1,6 @@
 import 'package:flutter_app_news_c11_sun/api/api_manager.dart';
 import 'package:flutter_app_news_c11_sun/home/category/cubit/source_states.dart';
+import 'package:flutter_app_news_c11_sun/repository/sources/dataSource/source_offline_data_source_impl.dart';
 import 'package:flutter_app_news_c11_sun/repository/sources/dataSource/source_remote_data_source_impl.dart';
 import 'package:flutter_app_news_c11_sun/repository/sources/repository/source_repository_impl.dart';
 import 'package:flutter_app_news_c11_sun/repository/sources/source_data_source.dart';
@@ -8,15 +9,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoryDetailsViewModel extends Cubit<SourceState> {
   late SourceRepository sourceRepository;
-
   late SourceRemoteDataSource remoteDataSource;
+  late SourceOfflineDataSource offlineDataSource;
 
   late ApiManager apiManager;
 
   CategoryDetailsViewModel() : super(SourceLoadingState()) {
     apiManager = ApiManager();
     remoteDataSource = SourceRemoteDataSourceImpl(apiManager: apiManager);
-    sourceRepository = SourceRepositoryImpl(remoteDataSource: remoteDataSource);
+    offlineDataSource = SourceOfflineDataSourceImpl();
+    sourceRepository = SourceRepositoryImpl(
+        remoteDataSource: remoteDataSource,
+        offlineDataSource: offlineDataSource);
   }
 
   //todo: hold data - handle logic

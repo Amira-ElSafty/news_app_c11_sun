@@ -8,9 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NewsWidgetViewModel extends Cubit<NewsStates> {
   late NewsRepository newsRepository;
-
   late NewsRemoteDataSource remoteDataSource;
-
   late ApiManager apiManager;
 
   NewsWidgetViewModel() : super(NewsLoadingState()) {

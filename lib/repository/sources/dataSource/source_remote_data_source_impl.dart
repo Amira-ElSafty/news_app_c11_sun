@@ -4,7 +4,6 @@ import 'package:flutter_app_news_c11_sun/repository/sources/source_data_source.d
 
 class SourceRemoteDataSourceImpl implements SourceRemoteDataSource {
   ApiManager apiManager;
-
   SourceRemoteDataSourceImpl({required this.apiManager});
 
   @override
