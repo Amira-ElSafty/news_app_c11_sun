@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_news_c11_sun/app_colors.dart';
+import 'package:flutter_app_news_c11_sun/di/di_impl.dart';
 import 'package:flutter_app_news_c11_sun/home/news/cubit/news_states.dart';
 import 'package:flutter_app_news_c11_sun/home/news/cubit/news_widget_view_model.dart';
 import 'package:flutter_app_news_c11_sun/home/news/news_item.dart';
@@ -16,7 +17,8 @@ class NewsWidget extends StatefulWidget {
 }
 
 class _NewsWidgetState extends State<NewsWidget> {
-  NewsWidgetViewModel viewModel = NewsWidgetViewModel();
+  NewsWidgetViewModel viewModel =
+      NewsWidgetViewModel(newsRepository: injectNewsRepository());
 
   @override
   void initState() {

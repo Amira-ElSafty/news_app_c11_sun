@@ -7,6 +7,8 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
 
   NewsRemoteDataSourceImpl({required this.apiManager});
 
+  /// constructor injection
+
   @override
   Future<NewsResponse?> getNewsBySourceId(String sourceId) async {
     var response = await apiManager.getNewsBySourceId(sourceId);
